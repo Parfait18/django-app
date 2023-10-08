@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+{% block title %} 
+	<title>Member details</title>
+	{% endblock %}
+	{% block content %}
+
+	<h1>Member: {{ member.firstname }} {{ member.lastname }}</h1>
+	<p> Phone : {{ member.phone }} </p>
+	<p> Member since : {{ member.joined_date }}</p>
+
+
+	<p> Back to members <a href="/members"> Members</a></p>
+
+	{% endblock %}
