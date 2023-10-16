@@ -3,13 +3,40 @@ from django.http import HttpResponse
 from django.template import loader
 from .models import  Member
 from rest_framework import viewsets
+from rest_framework.response import Response
+from rest_framework import status
 from .serializers import MemberSerializer
-
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.views import APIView
 
 # Create your views here.
-class MembersViewSet(viewsets.ModelViewSet):
+class MembersView(APIView):
     queryset = Member.objects.all()
-    serializer_class = MemberSerializer 
+    serializer_class = MemberSerializer
+    def get(self, request, *args, **kwargs):
+        '''
+        List all the memebers items 
+        '''
+        members = Member.objects.all()
+        serializer = MemberSerializer(members, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    def post(self, request, *args, **kwargs):
+        '''
+        Create the Member with given memeber data
+        '''
+        data = {
+            'firstname': request.data.get('firstname'), 
+            'lastname': request.data.get('lastname'), 
+            'email': request.data.get('email'),
+            'phone':  request.data.get('phone')
+        }
+        serializer = MemberSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
