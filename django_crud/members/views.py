@@ -31,10 +31,29 @@ class MembersView(APIView):
             'email': request.data.get('email'),
             'phone':  request.data.get('phone')
         }
-        serializer = MemberSerializer(data=data)
+        try:
+            serializer = MemberSerializer(data=data)
+        except:
+            print(serializer.errors)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            member = Member.objects.get(email=request.data.get('email'))
+        except Member.DoesNotExist:
+            member = None
+        if member:
+            return Response([{'email': 'There is a user with this email'}],status=status.HTTP_302_FOUND)
+        try:
+            member = Member.objects.get(phone=request.data.get('phone'))
+        except Member.DoesNotExist:
+            member = None
+        if member:
+            return Response([{'phone': 'There is a user with this phone'}],status=status.HTTP_302_FOUND)
+
+        print("request valid =>", serializer.is_valid())
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+                            serializer.save()
+                            return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

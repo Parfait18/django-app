@@ -5,7 +5,7 @@ export default {
 		return {
 			firstname: 'Parfait',
 			lastname: 'AHOUANTO',
-			phone: '66301160',
+			phone: 66301160,
 			email: 'parfaitsv@gmail.com',
 			errors_messages: []
 		}
@@ -17,27 +17,29 @@ export default {
 			payload.append('lastname', this.lastname)
 			payload.append('email', this.email)
 			payload.append('phone', this.phone)
+			try {
 
-			this.axios.post('member/', payload).then((result) => {
-				console.log(result)
-			}).catch((error) => {
+				console.log(payload)
+				this.axios.post('member/', payload).then((result) => {
+					console.log(result)
+				});
+
+			} catch (error) {
 				console.log(error)
-			})
+			}
 			console.log('ezez')
 
 		}
 	},
 	watch: {
 	}
-
-
 }
 </script>
 
 <template>
 	<div class="card bg-white mx-auto md:w-8/12 w-full p-4 shadow-md rounded">
 		<h4 class="text-gray-600 text-2xl font-bold"> Formulaire de creation de membre</h4>
-		<form method="POST" class="p-2">
+		<form method="POST" class="p-2" encype="multipart/form">
 			<span v-if="errors_messages"> {{ errors_messages }}</span>
 			<div class="mb-2">
 				<label for="firstname" class="block mb-1"> Prénom</label>
