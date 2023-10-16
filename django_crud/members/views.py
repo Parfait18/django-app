@@ -2,9 +2,18 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from .models import  Member
+from rest_framework import viewsets
+from .serializers import MemberSerializer
 
 
 # Create your views here.
+class MembersViewSet(viewsets.ModelViewSet):
+    queryset = Member.objects.all()
+    serializer_class = MemberSerializer 
+
+
+
+
 def members(request):
     members = Member.objects.all().values()
     template = loader.get_template('all_members.html')
