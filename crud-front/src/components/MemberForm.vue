@@ -39,7 +39,7 @@ export default {
 <template>
 	<div class="card bg-white mx-auto md:w-8/12 w-full p-4 shadow-md rounded">
 		<h4 class="text-gray-600 text-2xl font-bold"> Formulaire de creation de membre</h4>
-		<form method="POST" class="p-2" encype="multipart/form">
+		<form method="POST" class="p-2" encype="multipart/form-data">
 			<span v-if="errors_messages"> {{ errors_messages }}</span>
 			<div class="mb-2">
 				<label for="firstname" class="block mb-1"> Prénom</label>
