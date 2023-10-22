@@ -177,3 +177,64 @@ db.collectionName.aggregate([
 ])
 ```
 
+### $project
+This aggregation stage passes only the specified fields along to the next aggregation stage.
+
+```
+db.collectionName.aggregate([
+  {
+    //display only name, cuisine and address field
+    $project: {
+      "name": 1,
+      "cuisine": 1,
+      "address": 1
+      "_id": 0 // exclud _id field
+    }
+  },
+  //limit resutl for 5 element
+  {
+    $limit: 5
+  }
+])
+
+```
+### $sort
+This aggregation stage groups sorts all documents in the specified sort or
+
+```
+db.collectionName.aggregate(
+    [
+        { $sort: { "field_want_to_sort": 1 }}
+    ]
+)
+```
+The sort order can be chosen by using `` 1 `` or `` -1 ``. `` 1 `` is **ascending** and `` -1 `` is **descending**. 
+
+
+### $match
+``` 
+db.collectionName.aggregate([
+    { $match: { field: "value"}}
+])
+```
+### $addFields
+This aggregation stage adds new fields to documents.
+```
+db.collectionName.aggregate([
+    { 
+        addFields: {
+            avgScore: { $avg: "$grades.score"}
+        }
+    }
+])
+
+```
+
+### $count
+This aggregation stage counts the total amount of documents passed from the previous stage.
+``` 
+db.collectionName.aggregate([
+    { $match: { field: "value"}}
+    { $count: "totalChiness"}
+])
+```
