@@ -141,20 +141,39 @@ Aggregation operations allow you to group, sort, perform calculations, analyze d
 
 Aggregation pipelines can have one or more "stages". The order of these stages are important. Each stage acts upon the results of the previous stage.
 
-### 
+### aggregation example of use
 ```
 db.collectionName.aggregate(
     [
-        // Stage 1: Only find documents that match condition       {
+        // Stage 1: Only find documents that match condition  
+        {
            $match: {field : { $gt: 1}} (condition example)
-       } ,
+        }  ,
        // Stage 2: Group documents by category and sum each categories likes (exmaple)
+       {
        $group : {
-            _id: "$category", 
-            totalLikes:{
-                 $sum : "$likes" 
-                }}
+           _id: "$category", 
+           totalLikes:{ $sum : "$likes" }
+            }
+       }
     ]
 )
+```
+### $group
+This aggregation stage groups documents by the unique ``_id`` expression provided.
+```
+db.collectionName.aggregate([
+    {
+        $group: { _id: "field_want_to_group_by_name"}
+    }
+])
+```
+
+### $limit
+This aggregation stage limits the number of documents passed to the next stage. 
+```
+db.collectionName.aggregate([
+    { $limit: 1}
+])
 ```
 
