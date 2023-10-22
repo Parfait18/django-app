@@ -137,4 +137,24 @@ db.collectionName.deleteMany(
 
 
 ## Aggrégation Pipeline
+Aggregation operations allow you to group, sort, perform calculations, analyze data, and much more.
+
+Aggregation pipelines can have one or more "stages". The order of these stages are important. Each stage acts upon the results of the previous stage.
+
+### 
+```
+db.collectionName.aggregate(
+    [
+        // Stage 1: Only find documents that match condition       {
+           $match: {field : { $gt: 1}} (condition example)
+       } ,
+       // Stage 2: Group documents by category and sum each categories likes (exmaple)
+       $group : {
+            _id: "$category", 
+            totalLikes:{
+                 $sum : "$likes" 
+                }}
+    ]
+)
+```
 
