@@ -1,7 +1,7 @@
 ## django-app
 SImple django application
 
-## MongoDb guidance
+## MOngoDb guidance
 
 Summary of command mongo database in order to interact with database
 
